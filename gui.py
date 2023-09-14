@@ -4,6 +4,8 @@ from tkinter import ttk
 from tkinter import PhotoImage
 import threading
 
+from yolo import ObjectTracker
+
 
 def start_camera_feed():
     # Function to start the camera feed
@@ -12,7 +14,8 @@ def start_camera_feed():
         _, frame = cap.read()
         if frame is not None:
             # Convert the OpenCV frame to a PhotoImage
-            photo = cv2_to_photoimage(frame)
+            new_frame, _ = ot.get_rect(frame)
+            photo = cv2_to_photoimage(new_frame)
             camera_label.config(image=photo)
             camera_label.image = photo  # Keep a reference
         if camera_running:
@@ -48,6 +51,7 @@ def exit_program():
     cap.release()  # Release the camera
     window.destroy()
 
+ot = ObjectTracker()
 
 # Create the main window
 window = tk.Tk()
