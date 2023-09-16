@@ -1,11 +1,18 @@
-from dash import Dash, html, dcc, callback, Output, Input
-import plotly.express as px
 import pandas as pd
+import dash_bootstrap_components as dbc
+import pandas as pd
+import plotly.express as px
 import plotly.graph_objects as go
+from dash import Dash, dcc, html
 # from dash import Dash, dcc, html
+from dash_bootstrap_templates import load_figure_template
+
+# loads the "darkly" template and sets it as the default
+load_figure_template("cyborg")
 
 def create_radar_graph(dataframe):
     radar_fig = px.line_polar(dataframe, r='r', theta='theta', line_close=True)
+    radar_fig.update_traces(fill='toself')
     return radar_fig
 
 def create_gauge_graph(data):
@@ -29,7 +36,7 @@ df = pd.DataFrame(dict(
            'thermal stability', 'device integration']))
 radar_fig = create_radar_graph(df)
 
-app = Dash(__name__)
+app=Dash(__name__, external_stylesheets=[dbc.themes.DARKLY])
 
 app.layout = html.Div([
     html.H1(children='Analytic Report', style={'textAlign':'center'}),
