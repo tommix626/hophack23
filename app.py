@@ -1,11 +1,11 @@
 from flask import Flask, request, render_template, redirect, url_for
 from gpt_api import GPTReader
 
-
-app=Flask(__name__,template_folder='Templates')
+app = Flask(__name__, template_folder='Templates')
 # app.config['UPLOAD_FOLDER'] = "img/"
 # Initialize the "txt" variable
 user_input_link = ""
+
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
@@ -16,12 +16,12 @@ def index():
         # Redirect to the output page after saving the input
         return redirect(url_for('process_user_input_link'))
 
-    return render_template('index.html')
+    return render_template('home.html')
 
 
 @app.route("/process", methods=['GET', 'POST'])
 def process_user_input_link():
-    #use the openai api
+    # use the openai api
     reader = GPTReader()
     reader.run(user_input_link)
     print(reader.get_similar_sources())
@@ -34,6 +34,7 @@ def save_text():
     global user_input_link
     user_input_link = request.form.get('user_text')
     return "Text saved successfully." + user_input_link
+
 
 if __name__ == '__main__':
     app.run(debug=True)

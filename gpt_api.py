@@ -38,11 +38,12 @@ class GPTReader:
             print("An error occurred:", str(e))
 
     def run(self, url):
-        self.url = url
-        print('getting news article for url', self.url)
-        article = NewsPlease.from_url(self.url)
-        text = article.maintext
+        print('getting news article for url', url)
+        article = NewsPlease.from_url(url)
+        if article == {}:
+            raise ValueError('invalid URL')
 
+        self.url = url
         try:
             with open('prompt.txt') as prompt_file:
                 prompt = prompt_file.read()
@@ -127,8 +128,3 @@ class GPTReader:
         similar_title = [e['title'] for e in similar[:min(len(similar), 10)]]
 
         return list(zip(similar_title, similar_url))
-
-
-reader = GPTReader()
-reader.run(url)
-print(reader.get_similar_sources())

@@ -1,5 +1,4 @@
-from newsapi import NewsApiClient
+from newsplease import NewsPlease
 
-nap = NewsApiClient(api_key='1e136b4d3edd4349bd0a0c4525b4aaa2')
-
-print(nap.get_everything(q='US-China trade war')['articles'])
+text = NewsPlease().from_url('https://www.w3schools.com/python/python_try_except.asp')
+print(text.maintext)
