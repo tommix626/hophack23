@@ -12,5 +12,6 @@ def display_in_new_window():
 
     return f"{content}{script}"
 
+
 if __name__ == '__main__':
     app2.run(port=5001,debug=True)
