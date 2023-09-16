@@ -36,6 +36,15 @@ app.layout = html.Div([
     dcc.Graph(figure=radar_fig,style={}),
     dcc.Graph(figure=create_gauge_graph(data=None))
 ])
+app.layout = html.Div([
+    html.H1(children='Analytic Report', style={'textAlign':'center'}),
+    html.Div([
+        html.Br(),
+        html.Div(children=[dcc.Graph(figure=radar_fig,style={})], style={'padding': 10, 'flex': 1}),
+        html.Div(children=[dcc.Graph(figure=create_gauge_graph(data=None))], style={'padding': 10, 'flex': 1})
+    ], style={'display': 'flex', 'flex-direction': 'row'}
+    )
+])
 
 
 if __name__ == '__main__':
