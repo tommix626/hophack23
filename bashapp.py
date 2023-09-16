@@ -36,26 +36,22 @@ def create_gauge_graph(data):
     return fig
 
 
-df = pd.DataFrame(dict(
-    r=[1, 5, 2, 2, 3],
-    theta=['processing cost', 'mechanical properties', 'chemical stability',
-           'thermal stability', 'device integration']))
-radar_fig = create_radar_graph(df)
+
 
 bashapp.layout = html.Div(
     [dcc.Location(id='url', refresh=False),
     html.Div(id='page-content')
 ])
 
-layout_data = [[
-    html.H1(children='Analytic Report', style={'textAlign': 'center'}),
-    html.Div([
-        html.Br(),
-        html.Div(children=[dcc.Graph(figure=radar_fig, style={})], style={'padding': 10, 'flex': 1}),
-        html.Div(children=[dcc.Graph(figure=create_gauge_graph(data=None))], style={'padding': 10, 'flex': 1})
-    ], style={'display': 'flex', 'flex-direction': 'row'}
-    )
-]]
+# layout_data = [[
+#     html.H1(children='Analytic Report', style={'textAlign': 'center'}),
+#     html.Div([
+#         html.Br(),
+#         html.Div(children=[dcc.Graph(figure=radar_fig, style={})], style={'padding': 10, 'flex': 1}),
+#         html.Div(children=[dcc.Graph(figure=create_gauge_graph(data=None))], style={'padding': 10, 'flex': 1})
+#     ], style={'display': 'flex', 'flex-direction': 'row'}
+#     )
+# ]]
 layout_404 = [[
                     html.H1('404 - Page not found'),
                     html.P('The page you are looking for does not exist.'),
@@ -74,6 +70,10 @@ def is_valid_url(url):
     except ValueError:
         return False
 
+
+
+
+
 @bashapp.callback(
     [Output('page-content', 'children')],
     [Input('url', 'pathname'),
@@ -82,17 +82,44 @@ def is_valid_url(url):
 def display_page(pathname,search):
     if pathname == '/data':
         print(f"pathname={pathname}, search={search}")
-        query_parameters = urllib.parse.parse_qs(search.split("?")[-1])
+        query_parameters = urllib.parse.parse_qs(search.split("?")[1])
         print(query_parameters)
         if "url" in query_parameters:
             print(F"query_parameters[url] = "+query_parameters["url"][0])
             if(is_valid_url(query_parameters["url"][0])):
-                #process openai api and return layout for data.
+                #TODO:process openai api and return layout for data.
+                GPTreader = get_reader(query_parameters["url"][0])
+                layout_data = construct_data(GPTreader)
                 return layout_data
 
     return layout_404
 
+def get_reader(user_input_link):
+    # use the openai api
+    reader = GPTReader()
+    reader.run(user_input_link)
+    print(reader.get_similar_sources())
+    # Render the output.html template with the value of the txt variable
+    return reader
 
+def construct_data(reader):
+    print()
+    #construct the ladar graph data
+    df = pd.DataFrame(dict(
+        r=[reader.accuracy_score, reader.aggressive_score,reader.satire_score,reader.credibility_score,reader.objective_score],
+        theta=['accuracy', 'aggressive_score', 'satire_score',
+               'credibility_score', 'objective_score']))
+    radar_fig = create_radar_graph(df)
+    l_data = [[
+    html.H1(children='Analytic Report', style={'textAlign': 'center'}),
+    html.Div([
+        html.Br(),
+        html.Div(children=[dcc.Graph(figure=radar_fig, style={})], style={'padding': 10, 'flex': 1}),
+        html.Div(children=[dcc.Graph(figure=create_gauge_graph(data=None))], style={'padding': 10, 'flex': 1})
+    ], style={'display': 'flex', 'flex-direction': 'row'}
+    )
+]]
+    return l_data
 
 
 if __name__ == '__main__':

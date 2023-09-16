@@ -25,7 +25,7 @@ class GPTReader:
         self.topic = ""
 
         try:
-            with open('api_key.txt', 'r') as file:
+            with open('api_key_private.txt', 'r') as file:
                 # Read the entire content of the file into a string
                 self.api_key = file.read()
 
