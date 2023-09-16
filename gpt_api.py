@@ -3,9 +3,6 @@ from newsplease import NewsPlease
 from newsapi import NewsApiClient
 import re
 
-'''
-GETTING NEWS TEXT FROM URL
-'''
 # url = input('enter your news url')
 url = 'https://www.foxnews.com/politics/us-china-trade-war-larry-kudlow-chuck-grassley-donald-trump-roy-blunt-kevin-cramer'
 
@@ -17,6 +14,9 @@ class GPTReader:
         self.response = None
         self.accuracy_score = 5
         self.aggressive_score = 5
+        self.satire_score = 5
+        self.credibility_score = 5
+        self.objective_score = 5
         self.accuracy_pair = []  # contains pairs (text, explanation)
         self.aggressive_pair = []
         self.genre = []
@@ -25,7 +25,7 @@ class GPTReader:
         self.topic = ""
 
         try:
-            with open('api_key_private.txt', 'r') as file:
+            with open('api_key.txt', 'r') as file:
                 # Read the entire content of the file into a string
                 self.api_key = file.read()
 
@@ -33,14 +33,7 @@ class GPTReader:
                 # print("String read from the file:")
                 # print(api_key)
         except FileNotFoundError:
-            try:
-                with open('api_key.txt', 'r') as file:
-                    # Read the entire content of the file into a string
-                    self.api_key = file.read()
-
-            except FileNotFoundError:
-
-                print("The file 'api_key.txt' was not found.")
+            print("The file 'api_key.txt' was not found.")
         except Exception as e:
             print("An error occurred:", str(e))
 
@@ -74,9 +67,29 @@ class GPTReader:
         text = self.response
 
         print('getting accuracy score...')
-        accuracy_score_text = re.findall(r'\!\!([a-zA-Z0-9\s]+)\!\!', text, re.MULTILINE)
+        accuracy_score_text = re.findall(r'!!([a-zA-Z0-9\s]+)!!', text, re.MULTILINE)
         self.accuracy_score = int(accuracy_score_text[0])
         print('accuracy_score: ', self.accuracy_score)
+
+        print('getting aggressive score...')
+        aggressive_score_text = re.findall(r'~([a-zA-Z0-9\s]+)~', text, re.MULTILINE)
+        self.aggressive_score = int(aggressive_score_text[0])
+        print('aggressive score:', self.aggressive_score)
+
+        print('getting satire score...')
+        satire_score_text = re.findall(r'\^\^([a-zA-Z0-9\s]+)\^\^', text, re.MULTILINE)
+        self.satire_score = int(satire_score_text[0])
+        print('satire score:', self.satire_score)
+
+        print('getting credibility score...')
+        credibility_score_text = re.findall(r'\\\\([a-zA-Z0-9\s]+)\\\\', text, re.MULTILINE)
+        self.credibility_score = int(credibility_score_text[0])
+        print('credibility score: ', self.credibility_score)
+
+        print('getting objectivity score...')
+        objective_score_text = re.findall(r'@@([a-zA-Z0-9\s]+)@@', text, re.MULTILINE)
+        self.objective_score = int(objective_score_text[0])
+        print('objective score: ', self.objective_score)
 
         print('getting accuracy texts and explanations...')
         accuracy_texts = re.findall(r'\[([a-zA-Z0-9.,$%@&\'\-"\s]+)\]', text, re.MULTILINE)
@@ -84,19 +97,14 @@ class GPTReader:
         self.accuracy_pair = list(zip(accuracy_texts, accuracy_explanations))
         print('accuracy texts and explanations...', self.accuracy_pair)
 
-        print('getting aggressive score...')
-        aggressive_score_text = re.findall(r'\~([a-zA-Z0-9\s]+)\~', text, re.MULTILINE)
-        self.aggressive_score = int(aggressive_score_text[0])
-        print('aggressive score', self.aggressive_score)
-
         print('getting aggressive texts and explanations...')
         aggressive_texts = re.findall(r'\|\|([a-zA-Z0-9.,$%@&\'\-"\s]+)\|\|', text, re.MULTILINE)
-        aggressive_explanations = re.findall(r'\/\/([a-zA-Z0-9.,$%\'\-"\s]+)\/\/', text, re.MULTILINE)
+        aggressive_explanations = re.findall(r'//([a-zA-Z0-9.,$%\'\-"\s]+)//', text, re.MULTILINE)
         self.aggressive_pair = list(zip(aggressive_texts, aggressive_explanations))
         print('aggressive texts and explanations...', self.aggressive_pair)
 
         print('getting genre...')
-        self.genre = re.findall(r'\;\;([a-zA-Z0-9.,&%$@\'\-"\s]+)\;\;', text, re.MULTILINE)
+        self.genre = re.findall(r';;([a-zA-Z0-9.,&%$@\'\-"\s]+);;', text, re.MULTILINE)
         print('genre: ', self.genre)
 
         print('getting context...')
@@ -104,11 +112,11 @@ class GPTReader:
         print('context: ', self.context)
 
         print('getting audience...')
-        self.audience = re.findall(r'\<\<([a-zA-Z0-9.,&%$@\'\-"\s]+)\>\>', text, re.MULTILINE)[0]
+        self.audience = re.findall(r'<<([a-zA-Z0-9.,&%$@\'\-"\s]+)>>', text, re.MULTILINE)[0]
         print('audience: ', self.audience)
 
         print('getting topic...')
-        self.topic = re.findall(r'\%\%([a-zA-Z0-9.,&%$@\'\-"\s]+)\%\%', text, re.MULTILINE)[0]
+        self.topic = re.findall(r'%%([a-zA-Z0-9.,&$@\'\-"\s]+)%%', text, re.MULTILINE)[0]
         print('topic: ', self.topic)
 
     def get_similar_sources(self):
@@ -120,7 +128,7 @@ class GPTReader:
 
         return list(zip(similar_title, similar_url))
 
-if __name__ == '__main__':
-    reader = GPTReader()
-    reader.run(url)
-    print(reader.get_similar_sources())
+
+reader = GPTReader()
+reader.run(url)
+print(reader.get_similar_sources())
