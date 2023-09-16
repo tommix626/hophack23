@@ -26,7 +26,7 @@ def process_user_input_link():
     reader.run(user_input_link)
     print(reader.get_similar_sources())
     # Render the output.html template with the value of the txt variable
-    return render_template('index_2.html', user_link=reader.accuracy_score)
+    return render_template('index_2.html', reader=reader)
 
 
 @app.route('/save', methods=['POST'])
