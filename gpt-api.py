@@ -1,5 +1,6 @@
 import openai
 from newsplease import NewsPlease
+from newsapi import NewsApiClient
 import re
 
 '''
@@ -21,6 +22,7 @@ class GPTReader:
         self.genre = []
         self.context = []
         self.audience = ""
+        self.topic = ""
 
         try:
             with open('api_key_private.txt', 'r') as file:
@@ -77,8 +79,8 @@ class GPTReader:
         print('accuracy_score: ', self.accuracy_score)
 
         print('getting accuracy texts and explanations...')
-        accuracy_texts = re.findall(r'\[([a-zA-Z0-9.,\-"\s]+)\]', text, re.MULTILINE)
-        accuracy_explanations = re.findall(r'\{([a-zA-Z0-9.,\-"\s]+)\}', text, re.MULTILINE)
+        accuracy_texts = re.findall(r'\[([a-zA-Z0-9.,$%@&\'\-"\s]+)\]', text, re.MULTILINE)
+        accuracy_explanations = re.findall(r'\{([a-zA-Z0-9.,$%\'\-"\s]+)\}', text, re.MULTILINE)
         self.accuracy_pair = list(zip(accuracy_texts, accuracy_explanations))
         print('accuracy texts and explanations...', self.accuracy_pair)
 
@@ -88,23 +90,37 @@ class GPTReader:
         print('aggressive score', self.aggressive_score)
 
         print('getting aggressive texts and explanations...')
-        aggressive_texts = re.findall(r'\|\|([a-zA-Z0-9.,\-"\s]+)\|\|', text, re.MULTILINE)
-        aggressive_explanations = re.findall(r'\/\/([a-zA-Z0-9.,\-"\s]+)\/\/', text, re.MULTILINE)
+        aggressive_texts = re.findall(r'\|\|([a-zA-Z0-9.,$%@&\'\-"\s]+)\|\|', text, re.MULTILINE)
+        aggressive_explanations = re.findall(r'\/\/([a-zA-Z0-9.,$%\'\-"\s]+)\/\/', text, re.MULTILINE)
         self.aggressive_pair = list(zip(aggressive_texts, aggressive_explanations))
         print('aggressive texts and explanations...', self.aggressive_pair)
 
         print('getting genre...')
-        self.genre = re.findall(r'\;\;([a-zA-Z0-9.,\-"\s]+)\;\;', text, re.MULTILINE)
+        self.genre = re.findall(r'\;\;([a-zA-Z0-9.,&%$@\'\-"\s]+)\;\;', text, re.MULTILINE)
         print('genre: ', self.genre)
 
         print('getting context...')
-        self.context = re.findall(r'\$\$([a-zA-Z0-9.,\-"\s]+)\$\$', text, re.MULTILINE)
+        self.context = re.findall(r'\$\$([a-zA-Z0-9.,&%@\'\-"\s]+)\$\$', text, re.MULTILINE)
         print('context: ', self.context)
 
         print('getting audience...')
-        self.audience = re.findall(r'\<\<([a-zA-Z0-9.,\-"\s]+)\>\>', text, re.MULTILINE)
+        self.audience = re.findall(r'\<\<([a-zA-Z0-9.,&%$@\'\-"\s]+)\>\>', text, re.MULTILINE)[0]
         print('audience: ', self.audience)
+
+        print('getting topic...')
+        self.topic = re.findall(r'\%\%([a-zA-Z0-9.,&%$@\'\-"\s]+)\%\%', text, re.MULTILINE)[0]
+        print('topic: ', self.topic)
+
+    def get_similar_sources(self):
+        assert(self.topic != '')
+
+        similar = NewsApiClient(api_key='1e136b4d3edd4349bd0a0c4525b4aaa2').get_everything(q=self.topic)['articles']
+        similar_url = [e['url'] for e in similar[:min(len(similar), 10)]]
+        similar_title = [e['title'] for e in similar[:min(len(similar), 10)]]
+
+        return list(zip(similar_title, similar_url))
 
 
 reader = GPTReader()
 reader.run(url)
+print(reader.get_similar_sources())

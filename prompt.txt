@@ -20,5 +20,7 @@ For each quote, I want you to provide the code in two vertical bars and explanat
 
 7. I want you to use 2-3 sentences to describe the intended audience and the purpose of this article. The intended audience needs to be as specific as possible, do not simply write something like “the readers of this article”. Make sure the audience is a very specific target group in society, for example, if the article is about the US-China trade war, the intended audience can be as specific as Chinese Immigrants in the US. I want you to provide this information in two angled brackets. For example: <<Chinese Immigrants in the US who are concerned about US relations with their home country>>
 
+8. I want you to descibe the event in the article with a short phrase. This phrase should be a summary of the topic of the article. You are to describe the topic in two percent signs, for example: %%US-China Trade War%%
+
 I want you to ignore the length requirements of the output, you can make your response as long as possible without waiting for the "continue" command.
 This is the maintext of the article:
