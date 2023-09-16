@@ -23,7 +23,7 @@ class GPTReader:
         self.audience = ""
 
         try:
-            with open('api_key.txt', 'r') as file:
+            with open('api_key_private.txt', 'r') as file:
                 # Read the entire content of the file into a string
                 self.api_key = file.read()
 
@@ -31,7 +31,14 @@ class GPTReader:
                 # print("String read from the file:")
                 # print(api_key)
         except FileNotFoundError:
-            print("The file 'api_key.txt' was not found.")
+            try:
+                with open('api_key.txt', 'r') as file:
+                    # Read the entire content of the file into a string
+                    self.api_key = file.read()
+
+            except FileNotFoundError:
+
+                print("The file 'api_key.txt' was not found.")
         except Exception as e:
             print("An error occurred:", str(e))
 
