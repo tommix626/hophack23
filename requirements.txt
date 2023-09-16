@@ -8,3 +8,5 @@ matplotlib
 seaborn
 tqdm
 tk
+openai
+news-please
