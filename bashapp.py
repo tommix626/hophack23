@@ -106,9 +106,9 @@ def construct_data(reader):
     print()
     #construct the ladar graph data
     df = pd.DataFrame(dict(
-        r=[reader.accuracy_score, reader.aggressive_score,reader.satire_score,reader.credibility_score,reader.objective_score],
-        theta=['accuracy', 'aggressive_score', 'satire_score',
-               'credibility_score', 'objective_score']))
+        r=[reader.accuracy_score, 10-reader.aggressive_score,10-reader.satire_score,reader.credibility_score,reader.objective_score],
+        theta=['accuracy', 'neutrality', 'readability',
+               'credibility', 'objectivity']))
     radar_fig = create_radar_graph(df)
     l_data = [[
     html.H1(children='Analytic Report', style={'textAlign': 'center'}),

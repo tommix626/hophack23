@@ -78,7 +78,7 @@ class GPTReader:
         print('aggressive score:', self.aggressive_score)
 
         print('getting satire score...')
-        satire_score_text = re.findall(r'\^\^([a-zA-Z0-9\s]+)\^\^', text, re.MULTILINE)
+        satire_score_text = re.findall(r'\^([a-zA-Z0-9\s]+)\^', text, re.MULTILINE)
         self.satire_score = int(satire_score_text[0])
         print('satire score:', self.satire_score)
 
