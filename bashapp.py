@@ -19,35 +19,6 @@ load_figure_template("cyborg")
 
 bashapp = Dash(__name__, external_stylesheets=[dbc.themes.DARKLY])
 
-# Define CSS styles for enhanced design
-bashapp.css.append_css({
-    'external_url': 'https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css'
-})
-bashapp.css.append_css({
-    'external_url': 'https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css'
-})
-bashapp.css.append_css({
-    'external_url': 'https://fonts.googleapis.com/css?family=Raleway:400,400i,700,700i'
-})
-bashapp.css.append_css({
-    'external_url': 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css'
-})
-bashapp.css.append_css({
-    'external_url': 'https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.0/animate.min.css'
-})
-bashapp.css.append_css({
-    'external_url': 'https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css'
-})
-bashapp.css.append_css({
-    'external_url': 'https://cdnjs.cloudflare.com/ajax/libs/flag-icon-css/3.5.0/css/flag-icon.min.css'
-})
-bashapp.css.append_css({
-    'external_url': 'https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.carousel.min.css'
-})
-bashapp.css.append_css({
-    'external_url': 'https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.theme.min.css'
-})
-
 
 def create_radar_graph(dataframe):
     radar_fig = px.line_polar(dataframe, r='r', theta='theta', line_close=True)
@@ -153,15 +124,27 @@ def construct_data(reader):
                  (reader.objective_score))*2 + random.randint(
         -3, 3)
 
-    #quotes on accuracy_pair
+    # quotes on accuracy_pair
     acc_data_div = [
         html.Div([
             html.Div([
-                html.H5("..."+text+"...", style={'font-weight': 'bold', 'font-size': '20px', 'color': 'darkred'}),
+                html.H5("..." + text + "...", style={'font-weight': 'bold', 'font-size': '20px', 'color': 'darkred'}),
                 html.H3(explanation, style={'font-size': '16px', 'color': 'darkblue'}),
-            ], style={'background-color': 'white', 'border-radius': '10px', 'padding': '20px', 'margin-bottom': '20px',
+            ], style={'background-color': '#b1b5b2', 'border-radius': '10px', 'padding': '20px',
+                      'margin-bottom': '20px',
                       'box-shadow': '0px 2px 6px rgba(0, 0, 0, 0.1)'})
-        ], style={'margin': '20px'}) for (text, explanation) in reader.accuracy_pair]
+        ], style={'margin': '20px'}) for (text, explanation) in reader.accuracy_pair
+    ]
+    # quotes on accuracy_pair
+    agg_data_div = [
+        html.Div([
+            html.Div([
+                html.H5("..." + text + "...", style={'font-weight': 'bold', 'font-size': '20px', 'color': 'darkred'}),
+                html.H3(explanation, style={'font-size': '16px', 'color': 'darkblue'}),
+            ], style={'background-color': '#b1b5b2', 'border-radius': '10px', 'padding': '20px',
+                      'margin-bottom': '20px',
+                      'box-shadow': '0px 2px 6px rgba(0, 0, 0, 0.1)'})
+        ], style={'margin': '20px'}) for (text, explanation) in reader.aggressive_pair]
 
     # [
     #     # Generate Q&A blocks from the list
@@ -184,7 +167,17 @@ def construct_data(reader):
             html.Div(children=[dcc.Graph(figure=create_gauge_graph(data=avg_score))], style={'padding': 10, 'flex': 1})
         ], style={'display': 'flex', 'flex-direction': 'row'}
         ),
-        html.Div(acc_data_div)
+
+        html.H1("Inaccuracy Alerts",
+                style={'text-align': 'center', 'font-size': '32px', 'padding-top': '20px', 'padding-bottom': '20px',
+                       'background-color': 'darkred', 'color': 'white', 'border-radius': '10px', 'font-family': 'Courier New'}),
+        html.Div(acc_data_div),
+
+        html.H1("Exaggeration Alerts",
+                style={'text-align': 'center', 'font-size': '32px', 'padding-top': '20px', 'padding-bottom': '20px',
+                       'background-color': 'darkred', 'color': 'white', 'border-radius': '10px',
+                       'font-family': 'Courier New'}),
+        html.Div(agg_data_div)
     ]]
     return l_data
 
