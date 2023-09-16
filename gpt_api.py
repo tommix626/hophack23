@@ -120,7 +120,7 @@ class GPTReader:
 
         return list(zip(similar_title, similar_url))
 
-
-reader = GPTReader()
-reader.run(url)
-print(reader.get_similar_sources())
+if __name__ == '__main__':
+    reader = GPTReader()
+    reader.run(url)
+    print(reader.get_similar_sources())

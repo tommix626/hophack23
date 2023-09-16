@@ -1,4 +1,6 @@
 from flask import Flask, request, render_template, redirect, url_for
+from gpt_api import GPTReader
+
 
 app=Flask(__name__,template_folder='Templates')
 # app.config['UPLOAD_FOLDER'] = "img/"
@@ -20,9 +22,11 @@ def index():
 @app.route("/process", methods=['GET', 'POST'])
 def process_user_input_link():
     #use the openai api
-    
+    reader = GPTReader()
+    reader.run(user_input_link)
+    print(reader.get_similar_sources())
     # Render the output.html template with the value of the txt variable
-    return render_template('index_2.html', user_link=user_input_link)
+    return render_template('index_2.html', user_link=reader.accuracy_score)
 
 
 @app.route('/save', methods=['POST'])
