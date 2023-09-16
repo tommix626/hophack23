@@ -1,5 +1,5 @@
-import re
+from newsapi import NewsApiClient
 
-s = 'jknkj}||20. *jij*-- "2,||*'
+nap = NewsApiClient(api_key='1e136b4d3edd4349bd0a0c4525b4aaa2')
 
-print(re.findall(r'\|\|([a-zA-Z0-9.,*"\-\s]+)\|\|', s))
+print(nap.get_everything(q='US-China trade war')['articles'])

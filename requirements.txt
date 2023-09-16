@@ -10,3 +10,4 @@ tqdm
 tk
 openai
 news-please
+newsapi-python
