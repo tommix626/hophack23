@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Website Link Opener</title>
+    <style>
+        /* Use flexbox to create a row layout */
+        .container {
+            display: flex;
+            align-items: center; /* Vertically center items */
+        }
+
+        /* Apply styles to the button */
+        button {
+            background-image: linear-gradient(45deg, rgba(255, 165, 0, 0.7), rgba(237, 127, 12, 0.8), rgba(236, 76, 31, 0.8), rgba(221, 20, 122, 0.5));
+            color: rgba(0, 0, 0, 0.7);
+            border: none;
+            padding: 11px 40px;
+            cursor: pointer;
+            font-family: 'Verdana', sans-serif;
+            border-radius: 10px;
+            margin-left: -20px;
+            margin-top: -2px;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5), /* Main shadow */
+                    1px 1px 2px rgba(0, 0, 0, 0.8) inset;
+
+        }
+
+        /* Apply styles to the input box */
+        input[type="text"] {
+            width: 4000px;
+            padding: 10px;
+            border: 2px solid black;
+            font-family: 'Verdana', sans-serif;
+            background-image: linear-gradient(45deg, rgba(221, 20, 122, 0.5), rgba(236, 76, 31, 0.8), rgba(237, 127, 12, 0.8), rgba(255, 165, 0, 0.7)); /* Gradient from orange to yellow */
+        color: white; /* Set text color to white for visibility */
+            border-radius: 10px;
+        }
+
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <input type="text" id="websiteLink" placeholder="Enter a weblink here and ...">
+        <button onclick="openWebsite()">autograde!</button>
+    </div>
+
+    <script>
+        function openWebsite() {
+            var websiteURL = document.getElementById('websiteLink').value;
+            websiteURL = 'http://localhost:8050/data?url=' + websiteURL
+            window.open(websiteURL, '_blank');
+        }
+    </script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
