@@ -50,10 +50,13 @@ class GPTReader:
             with open('prompt.txt') as prompt_file:
                 prompt = prompt_file.read()
                 user_input = prompt + article.maintext
+                print("len(user_input)=",len(user_input))
+                user_input = user_input[:18000]
+                print("clip len(user_input)=",len(user_input))
                 self.title = article.title
                 openai.api_key = self.api_key
                 response = openai.ChatCompletion.create(
-                    model="gpt-3.5-turbo",
+                    model="gpt-3.5-turbo", #"gpt-3.5-turbo"
                     messages=[
                         {"role": "system", "content": "You are a helpful assistant."},
                         {"role": "user", "content": user_input},
@@ -75,14 +78,20 @@ class GPTReader:
         text = self.response
 
         print('getting accuracy score...')
-        accuracy_score_text = re.findall(r'!!([a-zA-Z0-9\s]+)!!', text, re.MULTILINE)
-        self.accuracy_score = int(accuracy_score_text[0])
-        print('accuracy_score: ', self.accuracy_score)
+        try:
+            accuracy_score_text = re.findall(r'!!([a-zA-Z0-9\s]+)!!', text, re.MULTILINE)
+            self.accuracy_score = int(accuracy_score_text[0])
+            print('accuracy_score: ', self.accuracy_score)
+        except IndexError:
+            self.accuracy_score = 6
 
         print('getting aggressive score...')
-        aggressive_score_text = re.findall(r'~([a-zA-Z0-9\s]+)~', text, re.MULTILINE)
-        self.aggressive_score = int(aggressive_score_text[0])
-        print('aggressive score:', self.aggressive_score)
+        try:
+            aggressive_score_text = re.findall(r'~([a-zA-Z0-9\s]+)~', text, re.MULTILINE)
+            self.aggressive_score = int(aggressive_score_text[0])
+            print('aggressive score:', self.aggressive_score)
+        except IndexError:
+            self.aggressive_score = 6
 
         print('getting satire score...')
         satire_score_text = re.findall(r'\^([a-zA-Z0-9\s]+)\^', text, re.MULTILINE)
@@ -117,20 +126,32 @@ class GPTReader:
         print('genre: ', self.genre)
 
         print('getting context...')
-        self.context = re.findall(r'\$\$([a-zA-Z0-9.,&%@\'\-"\s]+)\$\$', text, re.MULTILINE)
-        self.context = [e.capitalize() for e in self.context]
-        print('context: ', self.context)
+        try:
+            self.context = re.findall(r'\$\$([a-zA-Z0-9.,&%@\'\-"\s]+)\$\$', text, re.MULTILINE)
+            self.context = [e.capitalize() for e in self.context]
+            print('context: ', self.context)
+        except:
+            pass
 
         print('getting audience...')
-        self.audience = re.findall(r'<<([a-zA-Z0-9.,&%$@\'\-"\s]+)>>', text, re.MULTILINE)[0]
-        print('audience: ', self.audience)
+        try:
+            self.audience = re.findall(r'<<([a-zA-Z0-9.,&%$@\'\-"\s]+)>>', text, re.MULTILINE)[0]
+            print('audience: ', self.audience)
+        except:
+            pass
 
         print('getting topic...')
-        self.topic = re.findall(r'%%([a-zA-Z0-9.,&$@\'\-"\s]+)%%', text, re.MULTILINE)[0]
-        print('topic: ', self.topic)
+        try:
+            self.topic = re.findall(r'%%([a-zA-Z0-9.,&$@\'\-"\s]+)%%', text, re.MULTILINE)[0]
+            print('topic: ', self.topic)
+        except:
+            pass
+
 
     def get_similar_sources(self):
-        assert(self.topic != '')
+        # assert(self.topic != '')
+        if self.topic == '':
+            return []
 
         similar = NewsApiClient(api_key='c7e38430c3ba4f0fbc698db57ea9ad7c').get_everything(q=self.topic)['articles']
         similar_url = [e['url'] for e in similar[:min(len(similar), 10)]]
