@@ -1,5 +1,5 @@
 # WIGO — Generative-AI based News Evaluation System
-Web Information Graded Online (WIGO)
+WIGO: Website Information Grader OL
 
 ![alt text](https://github.com/tommix626/hophack23/blob/dev/logo.jpg?raw=true)
 ## Directions
