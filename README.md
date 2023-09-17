@@ -1,5 +1,5 @@
 # WIGO — Generative-AI based News Evaluation System
-
+Web Information Graded Online (WIGO)
 ## Directions
 This program has not been published publicly. To execute, please clone the notebook to your local device
 
