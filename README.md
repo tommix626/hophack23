@@ -1,4 +1,4 @@
-# WIGO
+# WIGO — Generative-AI based News Evaluation System
 
 ## Directions
 This program has not been published publicly. To execute, please clone the notebook to your local device
