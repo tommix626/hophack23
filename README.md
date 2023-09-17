@@ -1,9 +1,10 @@
 # hophack23
 
-## Main Branch for releases only
-- use `dev` for development.
-- branch into feature branches and merge back to `dev`.
-- when committing, use message: "Action:Description" eg:`add:add a README file.`
+## Directions
+This program has not been published publicly. To execute, please clone the notebook to your local device
 
-## Try put testing features in a folder inside the /test folder
-e.g  /test/GPT/test.py
+1. On your local computer, execute "python bashapp.py" to start hosting a local site
+2. Navigate to https://rliu79.wixsite.com/my-site
+3. Enter the News article URL into the main search field
+4. You should be able to see a detailed report on the validity of the site
+
