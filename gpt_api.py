@@ -10,6 +10,7 @@ url = 'https://www.foxnews.com/politics/us-china-trade-war-larry-kudlow-chuck-gr
 class GPTReader:
     def __init__(self):
         self.url = None
+        self.title = None
         self.api_key = None
         self.response = None
         self.accuracy_score = 5
@@ -38,6 +39,7 @@ class GPTReader:
             print("An error occurred:", str(e))
 
     def run(self, url):
+        '''
         print('getting news article for url', url)
         article = NewsPlease.from_url(url)
         if article == {}:
@@ -48,6 +50,7 @@ class GPTReader:
             with open('prompt.txt') as prompt_file:
                 prompt = prompt_file.read()
                 user_input = prompt + article.maintext
+                self.title = article.title
                 openai.api_key = self.api_key
                 response = openai.ChatCompletion.create(
                     model="gpt-3.5-turbo",
@@ -58,7 +61,11 @@ class GPTReader:
                 )
                 chatbot_response = response['choices'][0]['message']['content']
                 print("Chatbot:", chatbot_response)
-                self.response = chatbot_response
+                self.response = chatbot_response'''
+
+        try:
+            with open('sample_gpt_response.txt') as f:
+                self.response = f.read()
                 self.__parse_response()
         except FileNotFoundError:
             print("The file 'prompt.txt' was not found.")
@@ -106,10 +113,12 @@ class GPTReader:
 
         print('getting genre...')
         self.genre = re.findall(r';;([a-zA-Z0-9.,&%$@\'\-"\s]+);;', text, re.MULTILINE)
+        self.genre = [e.capitalize() for e in self.genre]
         print('genre: ', self.genre)
 
         print('getting context...')
         self.context = re.findall(r'\$\$([a-zA-Z0-9.,&%@\'\-"\s]+)\$\$', text, re.MULTILINE)
+        self.context = [e.capitalize() for e in self.context]
         print('context: ', self.context)
 
         print('getting audience...')
