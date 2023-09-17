@@ -132,7 +132,7 @@ class GPTReader:
     def get_similar_sources(self):
         assert(self.topic != '')
 
-        similar = NewsApiClient(api_key='ac2cb504d6cc402b8b82348b081c18ff').get_everything(q=self.topic)['articles']
+        similar = NewsApiClient(api_key='c7e38430c3ba4f0fbc698db57ea9ad7c').get_everything(q=self.topic)['articles']
         similar_url = [e['url'] for e in similar[:min(len(similar), 10)]]
         similar_title = [e['title'] for e in similar[:min(len(similar), 10)]]
 

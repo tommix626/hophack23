@@ -198,7 +198,23 @@ def construct_data(reader):
 
     # construct final data
     l_data = [[
-
+        #logo picture on upper-right corner
+        html.Div([\
+            html.Img(
+                id="logo-image",
+                src='/static/img/wigo.png',  # Adjust the image path
+                style={
+                    'width': '60px',  # Adjust the width as needed
+                    'height': '60px',  # Adjust the height as needed        # Adjust the height as needed
+                    'display': 'block',  # Center the image horizontally
+                    'margin': '0 auto',
+                    'align-self': 'flex-end',
+                    'position': 'absolute',
+                    'top': '10px',
+                    'right': '10px','background-color': 'white', 'color': 'white', 'border-radius': '10px'
+                }
+            )]
+        ),
         html.H1(children=reader.title, style={'textAlign': 'center', 'font-family': 'Impact'}),
         html.H1(children='Analytic Report', style={'textAlign': 'center', 'font-family': 'Impact', 'font-style':'italic', 'color':'#f04f62'}),
 
