@@ -52,10 +52,13 @@ bashapp.layout = html.Div([
     dcc.Location(id='url', refresh=False),
     dcc.Loading(
         id="loading",
-        type="circle",
+        type="graph",
         fullscreen=True,
         style={
-            'background-color': '#333',  # Dark background color
+            'background-image': 'url("/static/bg.png")',
+            'background-size': '100%',
+            'background-color': 'rgba(0,0,0,0.8)',
+            'backgroundBlendMode': 'overlay',
             'color': '#fff',  # Text color
             'font-size': '24px',  # Text size
             'padding': '20px',
@@ -68,6 +71,8 @@ bashapp.layout = html.Div([
     )
 ], style={'background-image': 'url("/static/bg.png")',
           'background-size': '100%',
+          'background-color': 'rgba(0,0,0,0.65)',
+          'backgroundBlendMode': 'overlay',
           'width': '100%',
           'height': '100%'
           })
@@ -215,7 +220,7 @@ def construct_data(reader):
                 }
             )]
         ),
-        html.H1(children=reader.title, style={'textAlign': 'center', 'font-family': 'Impact'}),
+        html.H1(children=reader.title, style={'textAlign': 'center', 'font-family': 'Impact', 'margin-left':'20%', 'margin-right':'20%'}),
         html.H1(children='Analytic Report', style={'textAlign': 'center', 'font-family': 'Impact', 'font-style':'italic', 'color':'#f04f62'}),
 
         html.Div([

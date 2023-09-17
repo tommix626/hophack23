@@ -39,7 +39,7 @@ class GPTReader:
             print("An error occurred:", str(e))
 
     def run(self, url):
-        '''
+
         print('getting news article for url', url)
         article = NewsPlease.from_url(url)
         if article == {}:
@@ -61,11 +61,11 @@ class GPTReader:
                 )
                 chatbot_response = response['choices'][0]['message']['content']
                 print("Chatbot:", chatbot_response)
-                self.response = chatbot_response'''
-
-        try:
-            with open('sample_gpt_response.txt') as f:
-                self.response = f.read()
+                self.response = chatbot_response
+                '''
+                try:
+                with open('sample_gpt_response.txt') as f:
+                self.response = f.read()'''
                 self.__parse_response()
         except FileNotFoundError:
             print("The file 'prompt.txt' was not found.")
