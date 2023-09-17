@@ -22,7 +22,8 @@ def create_radar_graph(dataframe):
     radar_fig = px.line_polar(dataframe, r='r', theta='theta', line_close=True)
     radar_fig.update_traces(fill='toself')
     radar_fig.update_layout(font=dict(
-        size=21))
+        size=27))
+    radar_fig.update_layout(font_family="Impact",font_color="white")
     return radar_fig
 
 
@@ -31,10 +32,10 @@ def create_gauge_graph(data):
         domain={'x': [0, 1], 'y': [0, 1]},
         value=data,
         mode="gauge+number",  # "gauge+number+delta",
-        title={'text': "OVERALL SCORE"},
+        title={'text': "Overall Score", 'font': {'size': 34}},
         # delta={'reference': last_score},
         gauge={'axis': {'range': [None, 100]},
-               'bar': {'color': "#353835"},
+               'bar': {'color': "#7f7f7f"},
 
                'steps': [
                    {'range': [0, 33], 'color': "#f5a4a4"},
@@ -43,6 +44,7 @@ def create_gauge_graph(data):
                ]}))
     fig.update_layout(font=dict(
         size=25))
+    fig.update_layout(font_family="Impact",font_color="white")
     return fig
 
 
@@ -119,8 +121,8 @@ def construct_data(reader):
     df = pd.DataFrame(dict(
         r=[reader.accuracy_score, 10 - reader.aggressive_score, 10 - reader.satire_score, reader.credibility_score,
            reader.objective_score],
-        theta=['ACCURACY', 'NEUTRALITY', 'READABILITY',
-               'CREDIBILITY', 'OBJECTIVITY']))
+        theta=['Accuracy', 'Neutrality', 'Readability',
+               'Credibility', 'Objectivity']))
     radar_fig = create_radar_graph(df)
     avg_score = ((reader.accuracy_score) + \
                  (10 - reader.aggressive_score) + \
