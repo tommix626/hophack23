@@ -148,7 +148,7 @@ def construct_data(reader):
     context_div = html.Div(className='article-box', children=[
         html.H3("Context", style={'textAlign': 'center', 'font-family': 'Impact'}),
         html.Div(className='tag-container', style={'display': 'flex', 'flex-direction':'column', 'textAlign': 'center'}, children=[html.Div(className='tag', style={
-            'border': '1px solid #ccc', 'padding': '5px 10px', 'margin': '5px', 'width': 'max-content',
+            'border': '1px solid #ccc', 'padding': '5px 10px', 'margin-left':'auto', 'margin-right':'auto', 'margin-top':'5px', 'margin-bottom':'5px','width': 'max-content',
             'background-color': tag_colors[i % len(tag_colors)], 'textAlign': 'center',
             'border-radius': '5px', 'color': '#333'}, children=e) for i, e in enumerate(reader.context)]),
     ], style={'margin-left': '10px', 'margin-right': '10px', 'margin-bottom': '20px', 'margin-top': '10px',
@@ -198,7 +198,10 @@ def construct_data(reader):
 
     # construct final data
     l_data = [[
-        html.H1(children='Analytic Report', style={'textAlign': 'center', 'font-family': 'Impact'}),
+
+        html.H1(children=reader.title, style={'textAlign': 'center', 'font-family': 'Impact'}),
+        html.H1(children='Analytic Report', style={'textAlign': 'center', 'font-family': 'Impact', 'font-style':'italic', 'color':'#f04f62'}),
+
         html.Div([
             html.Br(),
             html.Div([dcc.Graph(figure=radar_fig, style={})], style={'padding': 10, 'flex': 1, 'border-radius': '20px'}),

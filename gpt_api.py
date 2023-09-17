@@ -10,7 +10,7 @@ url = 'https://www.foxnews.com/politics/us-china-trade-war-larry-kudlow-chuck-gr
 class GPTReader:
     def __init__(self):
         self.url = None
-        self.title = None
+        self.title = 'Title'
         self.api_key = None
         self.response = None
         self.accuracy_score = 5
