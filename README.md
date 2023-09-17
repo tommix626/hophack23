@@ -1,4 +1,4 @@
-# hophack23
+# WIGO
 
 ## Directions
 This program has not been published publicly. To execute, please clone the notebook to your local device
