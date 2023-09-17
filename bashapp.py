@@ -259,4 +259,4 @@ def construct_data(reader):
 
 
 if __name__ == '__main__':
-    bashapp.run(debug=True)
+    bashapp.run(debug=False)
