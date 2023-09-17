@@ -1,5 +1,6 @@
 # WIGO — Generative-AI based News Evaluation System
 Web Information Graded Online (WIGO)
+![alt text](https://github.com/tommix626/hophack23/blob/dev/logo.jpg?raw=true)
 ## Directions
 This program has not been published publicly. To execute, please clone the notebook to your local device
 
