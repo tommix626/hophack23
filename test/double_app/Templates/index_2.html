@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="zh" class="no-js">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evaluation Report</title>
+    <link rel="stylesheet" type="text/css" href="../static/css/normalize.css" />
+    <link rel="stylesheet" type="text/css" href="../static/fonts/font-awesome-4.2.0/css/font-awesome.min.css" />
+    <link rel="stylesheet" type="text/css" href="../static/css/default.css">
+    <link rel="stylesheet" type="text/css" href="../static/css/set2.css" />
+    <link rel="icon" href="../static/img/Favicon.png" type="image/png">
+    <style>
+        /* CSS for Image Size */
+        .custom-image {
+            width: 1007.6x;
+            height: 176.5px;
+        }
+
+        .button-container {
+            position: absolute; /* Position the container absolutely */
+            top: 0; /* Adjust the top position as needed */
+            right: 0; /* Align the container to the right side */
+            margin: 20px; /* Add margin for spacing (optional) */
+        }
+
+        /* Style the button as needed */
+        .button-container button {
+            background-color: #496f96;
+            color: #f0f0f0;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+        }
+
+        /* Style for the container */
+        .container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr); /* 2 columns */
+            grid-template-rows: repeat(2, 1fr); /* 2 rows */
+            gap: 10px; /* Gap between blocks */
+        }
+
+        /* Style for each block */
+        .block {
+            border: 1px solid #2f3238;
+            text-align: center;
+            background-color: #2f3238;
+        }
+    </style>
+    <!--[if IE]>
+		<script src="http://libs.baidu.com/html5shiv/3.7/html5shiv.min.js"></script>
+	<![endif]-->
+</head>
+
+
+<body>
+    <div>
+        <img src="../static/img/Header.png" alt="Header" class = "custom-image">
+    </div>
+    <div class="container">
+        <div class="block">
+            <img src="../static/img/Graph.png" alt="Graph" width="400">
+        </div>
+        <div class="block">Block 2, user input= {{ reader.accuracy_score }}</div>
+        <div class="block">Block 3</div>
+        <div class="block">Block 4</div>
+    </div>
+</body>
+</html>
